@@ -1,0 +1,10 @@
+README.rst
+setup.py
+janusgraphy/__init__.py
+janusgraphy/gremlin_python_interface.py
+janusgraphy/traversal.py
+janusgraphy.egg-info/PKG-INFO
+janusgraphy.egg-info/SOURCES.txt
+janusgraphy.egg-info/dependency_links.txt
+janusgraphy.egg-info/requires.txt
+janusgraphy.egg-info/top_level.txt
