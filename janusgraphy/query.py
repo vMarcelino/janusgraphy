@@ -1,6 +1,6 @@
-from janusgraphy.traversal import Traversal
-from janusgraphy.graph_object import GraphObject
-from janusgraphy import traversal_verbose, run
+from .traversal import Traversal
+from .graph_object import GraphObject
+from . import traversal_verbose, run
 
 
 class Query():

@@ -3,12 +3,12 @@ __version__ = '0.1.0'
 import re
 import gremlin_python
 from gremlin_python.driver.client import Client
-from janusgraphy.traversal import Traversal
-from janusgraphy.graph_object import GraphObject
-from janusgraphy import helpers
+
+from .traversal import Traversal
+from .graph_object import GraphObject
+from . import helpers
 
 client = None
-
 traversal_verbose = False
 
 

@@ -1,8 +1,7 @@
 import gremlin_python
-from janusgraphy import traversal_verbose
-from janusgraphy import helpers
-from janusgraphy.traversal import Traversal
-from janusgraphy.query import Query
+from . import helpers
+
+traversal_verbose = False
 
 
 class GraphObjectMeta(type):
@@ -88,7 +87,9 @@ class GraphObject(metaclass=GraphObjectMeta):
             values = (traversal + [['valueMap', []]]).run()[0]
             if type(obj) is gremlin_vertex:
                 values = {k: v[0] for k, v in values.items()}
-            result = GraphObject.known_objects.get(label, GraphObject)(add_to_graph=False, fully_initialize=False, **values)
+            result = GraphObject.known_objects.get(label, GraphObject)(add_to_graph=False,
+                                                                       fully_initialize=False,
+                                                                       **values)
             result.graph_value = obj
             return result
 
@@ -111,6 +112,9 @@ class GraphObject(metaclass=GraphObjectMeta):
 
     @helpers.classinstancemethod
     def query(self=None, cls=None, verbose=None):
+        from .query import Query  # late imports to avoid circular imports
+        from .traversal import Traversal
+
         if self:
             return Query(helpers.get_traversal(self.graph_value), verbose=verbose)
         else:

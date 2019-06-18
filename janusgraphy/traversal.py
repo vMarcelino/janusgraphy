@@ -1,6 +1,4 @@
 import gremlin_python
-from janusgraphy import client
-from janusgraphy import traversal_verbose
 
 
 class Traversal:
@@ -102,9 +100,7 @@ class Traversal:
         r = dot_splt(self.query)
         return r
 
-    def run(self, verbose=None) -> list:
-        if verbose is None:
-            verbose = traversal_verbose
+    def run(self, client, verbose=False) -> list:
         ts = self.get_traversal_string().replace('\n', '\\n')
         if verbose:
             print('traversal -->', ts)
