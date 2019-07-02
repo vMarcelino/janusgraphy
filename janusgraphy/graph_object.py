@@ -40,40 +40,56 @@ class GraphObjectMeta(type):
 
 
 class GraphObject(metaclass=GraphObjectMeta):
+    """The base graph object
+
+    The object's label is converted by default from CamelCase to snake_case.
+    When extending, the object must implement add_to_graph method and can set
+    a custom label through Label property and some mandatory properties
+
+    The kwarguments passed in the __init__ method will be set in the database
+    as properties
+    
+    Raises:
+        NotImplementedError: on add_to_graph
+    """
     #known_objects = dict()
-    Label = None  # just because the linter was giving errors due to not detecting metaclass
-    Structure = None
+    Label = None  # set by metaclass but can be set by extending class
+    Structure = None  # properties that are mandatory. Can be set by extending class
 
-    def __init__(self, *args, add_to_graph=True, fully_initialize=True, **kwproperties):
-        #self.Label = type(self).__name__.lower()
-        #self.known_objects[self.Label] = type(self)
+    Properties: dict  # current object properties
+    graph_value: 'Any'=None  # the value in the graph
 
-        import inspect
-        init_func = getattr(self, 'init', None)
-        if init_func:
-            init_parameter_names = inspect.getfullargspec(init_func)[0][1:]
-
-            init_parameters = {}
-            for parameter in init_parameter_names:
-                if parameter in kwproperties:
-                    init_parameters[parameter] = kwproperties[parameter]
-                    del kwproperties[parameter]
-
-        if 'Label' in kwproperties:
-            del kwproperties['Label']
-
-        if self.Structure:
-            helpers.check_structure(self.Structure, kwproperties)
-
-        self.Properties = kwproperties
+    def __new__(cls, *args, add_to_graph: bool = True, set_properties:bool=False, **kwproperties):
+        self = super(GraphObject, cls).__new__(cls)
         self.graph_value = None
+
+        if set_properties:
+            self.__set_properties(**kwproperties)
+            if add_to_graph:
+                self.add_to_graph()
+
+        return self
+
+    def __init__(self, *args, add_to_graph: bool = True,  **kwproperties):
+        """Initializes a GraphObject
+
+        The kwarguments passed are set as properties of the database object
+        (the logic that sets the properties is in __new__)
+        
+        Keyword Arguments:
+            add_to_graph {bool} -- Whether to add the object to the graph already (default: {True})
+        """
+        self.__set_properties(**kwproperties)
 
         if add_to_graph:
             self.add_to_graph()
 
-        if init_func and fully_initialize:
-            getattr(self, 'init')(**init_parameters, **kwproperties)
-            # init_func(**init_parameters, **kwproperties) # disabled as linter was giving problems
+    def __set_properties(self, **properties):
+        if self.Structure:
+            helpers.check_structure(self.Structure, properties)
+
+        self.Properties = properties
+
 
     @staticmethod
     def instantiate(obj):
@@ -87,9 +103,9 @@ class GraphObject(metaclass=GraphObjectMeta):
             values = (traversal + [['valueMap', []]]).run()[0]
             if type(obj) is gremlin_vertex:
                 values = {k: v[0] for k, v in values.items()}
-            result = GraphObject.known_objects.get(label, GraphObject)(add_to_graph=False,
-                                                                       fully_initialize=False,
-                                                                       **values)
+
+            cls = GraphObject.known_objects.get(label, GraphObject)
+            result = cls.__new__(cls, add_to_graph=False, set_properties=True, **values)
             result.graph_value = obj
             return result
 
@@ -116,9 +132,9 @@ class GraphObject(metaclass=GraphObjectMeta):
         from .traversal import Traversal
 
         if self:
-            return Query(helpers.get_traversal(self.graph_value), verbose=verbose)
+            return Query(query_space=helpers.get_traversal(self.graph_value), verbose=verbose)
         else:
-            return Query(Traversal.vertices(), verbose=verbose).filter_by_property(Label=cls.Label)
+            return Query(query_space=Traversal.vertices(), verbose=verbose).filter_by_property(Label=cls.Label)
 
     def remove_from_graph(self):
         if self.in_graph():
