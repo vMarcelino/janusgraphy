@@ -7,6 +7,7 @@ authors = ["Victor Marcelino <victor.fmarcelino@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.6"
 gremlinpython = "3.2.9"
+travel-backpack = "^0.14.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
