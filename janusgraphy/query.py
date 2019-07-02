@@ -206,6 +206,8 @@ class Query():
         return self
 
     def get(self, *queries):
+        """Gets the first successful query
+        """
         queries = list(queries)
         for i, q in enumerate(queries):
             if type(q) is type(self):
@@ -230,17 +232,30 @@ class Query():
         return self
 
     def group_by(self, key, value=None):
+        """Groups the traversals and returns the
+        value specified by 'value' parameter
+
+        The traversals are first grouped and then the
+        value is applied over each of the groups
+        """
         if type(key) is type(self):
             key = key.query
+
         self.query.add('group', None).add('by', key)
         if value is not None:
             if type(value) is type(self):
                 value = value.query
+
             self.query.add('by', value)
+
         return self
 
     def count(self):
         self.query.add('count', None)
+        return self
+
+    def delete(self):
+        self.query.add('drop', None)
         return self
 
     def to_dictionary(self, **kwkeys):
