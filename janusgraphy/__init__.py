@@ -8,8 +8,8 @@ from .traversal import Traversal
 from .graph_object import GraphObject
 from . import helpers
 
-client = None
 traversal_verbose = False
+master_client = None
 
 
 class Edge(GraphObject):
@@ -66,8 +66,13 @@ def run(traversal, verbose=None) -> list:
 
 
 def connect(url='ws://localhost:8182/gremlin', name='g') -> Client:
-    global client
-    client = Client(url, name)
+    return Client(url, name)
+
+
+def connect_master(url='ws://localhost:8182/gremlin', name='g') -> Client:
+    global master_client
+    master_client = Client(url, name)
+    return master_client
 
 
 def add_property(target, **properties) -> Traversal:
