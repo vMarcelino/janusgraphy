@@ -100,8 +100,13 @@ class Traversal:
         r = dot_splt(self.query)
         return r
 
-    def run(self, client, verbose=False) -> list:
+    def run(self, client=None, verbose=False) -> list:
         ts = self.get_traversal_string().replace('\n', '\\n')
+
+        if client is None:
+            from . import master_client
+            client = master_client
+
         if verbose:
             print('traversal -->', ts)
 
