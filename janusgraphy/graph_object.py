@@ -1,5 +1,5 @@
 import gremlin_python
-from . import helpers
+from janusgraphy import helpers
 
 traversal_verbose = False
 

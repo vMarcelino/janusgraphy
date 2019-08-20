@@ -4,9 +4,9 @@ import re
 import gremlin_python
 from gremlin_python.driver.client import Client
 
-from .traversal import Traversal
-from .graph_object import GraphObject
-from . import helpers
+from janusgraphy.traversal import Traversal
+from janusgraphy.graph_object import GraphObject
+from janusgraphy import helpers
 
 traversal_verbose = False
 master_client = None
