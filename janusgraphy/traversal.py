@@ -83,8 +83,11 @@ class Traversal:
                 if type(part) is str:
                     rc += ', "' + part + '"'
 
-                elif type(part) in [int, float, gremlin_python.statics.long]:
+                elif type(part) in [int, gremlin_python.statics.long]:
                     rc += ', ' + str(part)
+
+                elif type(part) is float:
+                    rc += ', ' + str(part) + 'f'
 
                 elif type(part) is type(self):
                     rc += ', ' + part.get_traversal_string()
