@@ -1,4 +1,10 @@
 import gremlin_python
+import dataclasses
+
+
+@dataclasses.dataclass
+class TraversalLiteral:
+    value: str
 
 
 class Traversal:
@@ -80,14 +86,17 @@ class Traversal:
         def comma_split(q):
             rc = ''
             for part in q:
+                if type(part) is TraversalLiteral:
+                    rc += f', ' + part.value
+
                 if type(part) is str:
-                    rc += ', "' + part + '"'
+                    rc += f', "{part}"'
 
                 elif type(part) in [int, gremlin_python.statics.long]:
                     rc += ', ' + str(part)
 
                 elif type(part) is float:
-                    rc += ', ' + str(part) + 'f'
+                    rc += f', {str(part)}f'
 
                 elif type(part) is type(self):
                     rc += ', ' + part.get_traversal_string()
@@ -107,7 +116,7 @@ class Traversal:
         ts = self.get_traversal_string().replace('\n', '\\n')
 
         if client is None:
-            from . import master_client
+            from janusgraphy import master_client
             client = master_client
 
         if verbose:
