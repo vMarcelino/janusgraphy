@@ -28,6 +28,14 @@ class Query():
         return f'<Query: {self.query.get_traversal_string()}>'
 
     @staticmethod
+    def from_vertex_id(vertex_id: int):
+        return Query(query_space=Traversal(t_query=[['g'], ['V', [vertex_id]]]))
+
+    @staticmethod
+    def from_edge_id(edge_id: int):
+        return Query(query_space=Traversal(t_query=[['g'], ['E', [edge_id]]]))
+
+    @staticmethod
     def relation(return_clones=None):
         return Query(query_space=Traversal().add('__'), return_clones=return_clones)
 
@@ -296,9 +304,10 @@ class Query():
 
         return run(self.query, verbose=verb)
 
-    def fetch_first(self, *args):
+    def fetch_first(self, *args, ensure_one=False):
         try:
             r = list(self.fetch_all(*args))
+            #if len(r) > 0
             return r[0]
         except Exception as e:
             print(e)
