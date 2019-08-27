@@ -4,7 +4,7 @@ description = "Advanced Enumerations (compatible with Python's stdlib Enum), Nam
 name = "aenum"
 optional = false
 python-versions = "*"
-version = "2.1.2"
+version = "2.2.1"
 
 [[package]]
 category = "dev"
@@ -50,7 +50,7 @@ description = "Read metadata from Python packages"
 name = "importlib-metadata"
 optional = false
 python-versions = ">=2.7,!=3.0,!=3.1,!=3.2,!=3.3"
-version = "0.18"
+version = "0.19"
 
 [package.dependencies]
 zipp = ">=0.5"
@@ -61,7 +61,7 @@ description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
 optional = false
 python-versions = ">=3.4"
-version = "7.1.0"
+version = "7.2.0"
 
 [[package]]
 category = "dev"
@@ -117,37 +117,28 @@ python-versions = "*"
 version = "4.5.3"
 
 [[package]]
-category = "main"
-description = "Some very useful functions and classes to use in day-to-day"
-name = "travel-backpack"
-optional = false
-python-versions = ">=3.6"
-version = "0.14.0"
-
-[[package]]
 category = "dev"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 name = "zipp"
 optional = false
 python-versions = ">=2.7"
-version = "0.5.1"
+version = "0.5.2"
 
 [metadata]
-content-hash = "744f1df431801709d100e61dcc23ab45e7f8e2dbab099e9bb5ea204b2a692560"
+content-hash = "c5fcc7cd7007b5dd675321ddec230c02f40ef8bb229ab90f140a9124e51ff3b1"
 python-versions = "^3.6"
 
 [metadata.hashes]
-aenum = ["3df9b84cce5dc9ed77c337079f97b66c44c0053eb87d6f4d46b888dc45801e38", "7a77c205c4bc9d7fe9bd73b3193002d724aebf5909fa0d297534208953891ec8", "a3208e4b28db3a7b232ff69b934aef2ea1bf27286d9978e1e597d46f490e4687"]
+aenum = ["0e3589654ef090784971f7778dcb74b08c9b4ef80b33267c00f82ddeedac179a", "b12a7be3d89b270f266f8643aaa126404e5cdc0929bd6f09548b8eaed85e2aa1", "e4dab068cbe00295bbc3660cd562221b008687d0f7a4c40fc2dd7a80002126a7"]
 atomicwrites = ["03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4", "75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"]
 attrs = ["69c0dbf2ed392de1cb5ec704444b08a5ef81680a61cb899dc08127123af36a79", "f0b870f674851ecbfbbbd364d6b5cbdff9dcedbc7f3f5e18a6891057f21fe399"]
 colorama = ["05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d", "f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"]
 gremlinpython = ["35614eb51238b493e48983de4f6cbdb73349bfd115e9e7faf21d83648daa8fb4", "e3fb5afdc15245274d3805f032734868a2836bf4091c8ca2dea1b0183822e04e"]
-importlib-metadata = ["6dfd58dfe281e8d240937776065dd3624ad5469c835248219bd16cf2e12dbeb7", "cb6ee23b46173539939964df59d3d72c3e0c1b5d54b84f1d8a7e912fe43612db"]
-more-itertools = ["3ad685ff8512bf6dc5a8b82ebf73543999b657eded8c11803d9ba6b648986f4d", "8bb43d1f51ecef60d81854af61a3a880555a14643691cc4b64a6ee269c78f09a"]
+importlib-metadata = ["23d3d873e008a513952355379d93cbcab874c58f4f034ff657c7a87422fa64e8", "80d2de76188eabfbfcf27e6a37342c2827801e59c4cc14b0371c56fed43820e3"]
+more-itertools = ["409cd48d4db7052af495b09dec721011634af3753ae1ef92d2b32f73a745f832", "92b8c4b06dac4f0611c0729b2f2ede52b2e1bac1ab48f089c7ddc12e26bb60c4"]
 pluggy = ["0825a152ac059776623854c1543d65a4ad408eb3d33ee114dff91e57ec6ae6fc", "b9817417e95936bf75d85d3f8767f7df6cdde751fc40aed3bb3074cbcb77757c"]
 py = ["64f65755aee5b381cea27766a3a147c3f15b9b6b9ac88676de66ba2ae36793fa", "dc639b046a6e2cff5bbe40194ad65936d6ba360b52b3c3fe1d08a82dd50b5e53"]
 pytest = ["3f193df1cfe1d1609d4c583838bea3d532b18d6160fd3f55c9447fdca30848ec", "e246cf173c01169b9617fc07264b7b1316e78d7a650055235d6d897bc80d9660"]
 six = ["3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c", "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"]
 tornado = ["5ef073ac6180038ccf99411fe05ae9aafb675952a2c8db60592d5daf8401f803", "6d14e47eab0e15799cf3cdcc86b0b98279da68522caace2bd7ce644287685f0a", "92b7ca81e18ba9ec3031a7ee73d4577ac21d41a0c9b775a9182f43301c3b5f8e", "ab587996fe6fb9ce65abfda440f9b61e4f9f2cf921967723540679176915e4c3", "b36298e9f63f18cad97378db2222c0e0ca6a55f6304e605515e05a25483ed51a"]
-travel-backpack = ["44951405c4a813dd4c9593fd3c143cd7b6fb9d99a87b9fe2526ba3543e489f5e", "a8f4073de4e0dc8937722e78fc716cf477f87c730d50369aec2b71aa02066f95"]
-zipp = ["8c1019c6aad13642199fbe458275ad6a84907634cc9f0989877ccc4a2840139d", "ca943a7e809cc12257001ccfb99e3563da9af99d52f261725e96dfe0f9275bc3"]
+zipp = ["4970c3758f4e89a7857a973b1e2a5d75bcdc47794442f2e2dd4fe8e0466e809a", "8a5712cfd3bb4248015eb3b0b3c54a5f6ee3f2425963ef2a0125b8bc40aafaec"]
