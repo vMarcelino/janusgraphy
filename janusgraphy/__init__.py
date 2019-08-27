@@ -103,3 +103,6 @@ def add_edge(source, Label, destination, both_directions=False, **properties) ->
         r += [_add(_source=destination, _label=Label, _destination=source, _properties=properties)]
 
     return r
+
+
+from janusgraphy.query import Query
