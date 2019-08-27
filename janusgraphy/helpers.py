@@ -42,8 +42,8 @@ def check_structure(structure, kwproperties):
 
 
 def get_traversal(x) -> 'Traversal':
-    from .traversal import Traversal # late import to avoid circular import
-    from .query import Query
+    from janusgraphy.traversal import Traversal # late import to avoid circular import
+    from janusgraphy.query import Query
     
     if type(x) is gremlin_python.structure.graph.Vertex:
         x = Traversal(t_query=[['g'], ['V', [x.id]]])

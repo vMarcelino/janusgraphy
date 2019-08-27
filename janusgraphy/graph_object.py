@@ -128,8 +128,8 @@ class GraphObject(metaclass=GraphObjectMeta):
 
     @helpers.classinstancemethod
     def query(self=None, cls=None, verbose=None):
-        from .query import Query  # late imports to avoid circular imports
-        from .traversal import Traversal
+        from janusgraphy.query import Query  # late imports to avoid circular imports
+        from janusgraphy.traversal import Traversal
 
         if self:
             return Query(query_space=helpers.get_traversal(self.graph_value), verbose=verbose)
