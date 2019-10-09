@@ -3,7 +3,6 @@ import gremlin_python
 from functools import wraps
 from datetime import datetime
 
-
 str_time = lambda: datetime.now().strftime('%Y-%m-%d at %H:%M:%S.%f')
 
 
@@ -37,14 +36,14 @@ def check_structure(structure, kwproperties):
             missing_args.append(var)
 
     if missing_args:
-        raise TypeError(f"missing {len(missing_args)} required positional argument{'' if len(missing_args) == 1 else 's'}: " +
-                        ', '.join(missing_args))
+        m = f"missing {len(missing_args)} required positional argument{'' if len(missing_args) == 1 else 's'}: "
+        raise TypeError(m + ', '.join(missing_args))
 
 
 def get_traversal(x) -> 'Traversal':
-    from janusgraphy.traversal import Traversal # late import to avoid circular import
+    from janusgraphy.traversal import Traversal  # late import to avoid circular import
     from janusgraphy.query import Query
-    
+
     if type(x) is gremlin_python.structure.graph.Vertex:
         x = Traversal(t_query=[['g'], ['V', [x.id]]])
     elif type(x) is gremlin_python.structure.graph.Edge:
