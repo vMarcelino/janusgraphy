@@ -70,8 +70,8 @@ class Traversal:
 
         return Traversal(r)
 
-    def get_traversal_string(self):
-        def dot_splt(q):
+    def get_traversal_string(self) -> str:
+        def dot_splt(q) -> str:
             rd = ''
             for part in q:
                 rd += '.' + part[0]
@@ -83,31 +83,34 @@ class Traversal:
 
             return rd[1:]
 
-        def comma_split(q):
-            rc = ''
+        def comma_split(q) -> str:
+            rc = []
             for part in q:
                 if type(part) is TraversalLiteral:
-                    rc += f', ' + part.value
+                    rc.append(part.value)
 
-                if type(part) is str:
-                    rc += f', "{part}"'
+                elif type(part) is str:
+                    rc.append(f'"{part}"')
+
+                elif type(part) is bool:
+                    rc.append('true' if part else 'false')
 
                 elif type(part) in [int, gremlin_python.statics.long]:
-                    rc += ', ' + str(part)
+                    rc.append(str(part))
 
                 elif type(part) is float:
-                    rc += f', {str(part)}f'
+                    rc.append(f'{str(part)}f')
 
                 elif type(part) is type(self):
-                    rc += ', ' + part.get_traversal_string()
+                    rc.append(part.get_traversal_string())
 
                 elif type(part) is list:
-                    rc += ', ' + dot_splt(part)
+                    rc.append(dot_splt(part))
 
                 else:
                     print('unrecognized type:', str(type(part)))
 
-            return rc[2:]
+            return ', '.join(rc)
 
         r = dot_splt(self.query)
         return r
