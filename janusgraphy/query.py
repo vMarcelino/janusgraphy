@@ -1,4 +1,4 @@
-from janusgraphy.traversal import Traversal
+from janusgraphy.traversal import Traversal, TraversalLiteral
 from janusgraphy.graph_object import GraphObject
 from janusgraphy import traversal_verbose, run
 
@@ -83,16 +83,34 @@ class Query():
     def less_or_equal(val):
         return Traversal().add('lte', val)
 
-    def filter_by_property(self, *properties, Label=None, **kwproperties):
+    def set_property(self, **kwproperties):
+        for key, value in kwproperties.items():
+            self.query.add('property', key, value)
+        return self
+
+    def filter_by_property(self, *properties, id=None, Label=None, **kwproperties):
 
         if Label:
-            if type(Label) is type(self):
+            if type(Label) is type(self):  # Why have I done this?? When does this happen?
                 Label = Label.query
-            elif hasattr(Label, 'Label'):
+
+            elif hasattr(Label, 'Label'):  # to handle passing the GraphObject type
                 Label = Label.Label
+
             self.query.add('hasLabel', Label)
+
+        if id:
+            if type(id) is type(self):  # why have I done this?? When does this happen?
+                id = id.query
+
+            elif hasattr(id, 'graph_value'):  # to handle passing the GraphObject type
+                id = id.graph_value.id
+
+            self.query.add('has', TraversalLiteral('id'), id)
+
         for key, value in kwproperties.items():
             self.query.add('has', key, value)
+
         for prop in properties:
             self.query.add('has', prop)
 
