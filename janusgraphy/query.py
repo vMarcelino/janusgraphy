@@ -128,6 +128,8 @@ class Query():
         import uuid
         temp_tag = str(uuid.uuid4())
         self.tag_as(temp_tag)
+        if relation.query.query[0] == ['__']:
+            relation.query.query = relation.query.query[1:]
         self.query += relation.query
         self.select_with_tag(temp_tag)
         return self.remove_duplicates()
@@ -332,9 +334,10 @@ class Query():
 
     def fetch_first(self, *args, ensure_one=False):
         try:
-            r = list(self.fetch_all(*args))
+            r = self.fetch_all(*args)
             #if len(r) > 0
-            return r[0]
+            return r.__next__()
+
         except Exception as e:
             print(e)
             raise
