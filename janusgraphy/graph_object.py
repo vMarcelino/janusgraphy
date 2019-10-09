@@ -57,9 +57,9 @@ class GraphObject(metaclass=GraphObjectMeta):
     Structure = None  # properties that are mandatory. Can be set by extending class
 
     Properties: dict  # current object properties
-    graph_value: 'Any'=None  # the value in the graph
+    graph_value: 'Any' = None  # the value in the graph
 
-    def __new__(cls, *args, add_to_graph: bool = True, set_properties:bool=False, **kwproperties):
+    def __new__(cls, *args, add_to_graph: bool = True, set_properties: bool = False, **kwproperties):
         self = super(GraphObject, cls).__new__(cls)
         self.graph_value = None
 
@@ -70,7 +70,7 @@ class GraphObject(metaclass=GraphObjectMeta):
 
         return self
 
-    def __init__(self, *args, add_to_graph: bool = True,  **kwproperties):
+    def __init__(self, *args, add_to_graph: bool = True, **kwproperties):
         """Initializes a GraphObject
 
         The kwarguments passed are set as properties of the database object
@@ -89,7 +89,6 @@ class GraphObject(metaclass=GraphObjectMeta):
             helpers.check_structure(self.Structure, properties)
 
         self.Properties = properties
-
 
     @staticmethod
     def instantiate(obj):
@@ -127,7 +126,7 @@ class GraphObject(metaclass=GraphObjectMeta):
             return obj
 
     @helpers.classinstancemethod
-    def query(self=None, cls=None, verbose=None):
+    def query(self=None, cls=None, verbose=None) -> 'Query':
         from janusgraphy.query import Query  # late imports to avoid circular imports
         from janusgraphy.traversal import Traversal
 
@@ -145,6 +144,10 @@ class GraphObject(metaclass=GraphObjectMeta):
 
     def in_graph(self):
         return self.graph_value is not None
+
+    def set_properties(self, **kwproperties):
+        self.query().set_property(**kwproperties).fetch_raw()
+        self.Properties.update(kwproperties)
 
     def __repr__(self):
         return f'<{self.Label}: {str(self.__dict__)}>'
