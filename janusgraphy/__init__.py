@@ -106,3 +106,11 @@ def add_edge(source, Label, destination, both_directions=False, **properties) ->
 
 
 from janusgraphy.query import Query
+
+
+def get_vertex_from_id(id, Label=None):
+    return Query.from_vertex_id(id, Label).fetch_first()
+
+
+def get_edge_from_id(id, Label=None):
+    return Query.from_edge_id(id, Label).fetch_first()
