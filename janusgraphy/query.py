@@ -28,17 +28,25 @@ class Query():
         return f'<Query: {self.query.get_traversal_string()}>'
 
     @staticmethod
-    def from_vertex_id(vertex_id: int):
-        return Query(query_space=Traversal(t_query=[['g'], ['V', [vertex_id]]]))
+    def from_vertex_id(vertex_id: int, Label=None):
+        query = Query(query_space=Traversal(t_query=[['g'], ['V', [vertex_id]]]))
+        if Label:
+            query.filter_by_property(Label=Label)
+        return query
 
     @staticmethod
-    def from_edge_id(edge_id: int):
-        return Query(query_space=Traversal(t_query=[['g'], ['E', [edge_id]]]))
+    def from_edge_id(edge_id: int, Label=None):
+        query = Query(query_space=Traversal(t_query=[['g'], ['E', [edge_id]]]))
+        if Label:
+            query.filter_by_property(Label=Label)
+        return query
 
     @staticmethod
     def relation(return_clones=None):
         return Query(query_space=Traversal().add('__'), return_clones=return_clones)
 
+    # comparisons
+    # Usage: filter_by_property(age=greater_or_equal(18), name=regex('[a-zA-Z]*'))
     @staticmethod
     def not_equal(val, return_clones=None):
         return Traversal().add('neq', val)
